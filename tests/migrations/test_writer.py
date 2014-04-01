@@ -139,6 +139,9 @@ class WriterTests(TestCase):
         })
         writer = MigrationWriter(migration)
         output = writer.as_string()
+        # There should not be unicode string prefixes in output
+        self.assertNotIn("u'", output)
+        self.assertNotIn('u"', output)
         # It should NOT be unicode.
         self.assertIsInstance(output, six.binary_type, "Migration as_string returned unicode")
         # We don't test the output formatting - that's too fragile.
