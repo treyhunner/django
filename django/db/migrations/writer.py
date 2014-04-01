@@ -53,8 +53,10 @@ class OperationWriter(object):
                     self.feed('%s={' % arg_name)
                     self.indent()
                     for key, value in arg_value.items():
+                        key_string, key_imports = MigrationWriter.serialize(key)
                         arg_string, arg_imports = MigrationWriter.serialize(value)
-                        self.feed('%s: %s,' % (repr(key), arg_string))
+                        self.feed('%s: %s,' % (key_string, arg_string))
+                        imports.update(key_imports)
                         imports.update(arg_imports)
                     self.unindent()
                     self.feed('},')
