@@ -29,6 +29,9 @@ module.exports = function(grunt) {
       all: ['javascript/*.html']
     },
     jshint: {
+      options: {
+        jshintrc: true,
+      },
       all: [
         'Gruntfile.js',
         '../django/contrib/admin/static/admin/js/admin/DateTimeShortcuts.js',
