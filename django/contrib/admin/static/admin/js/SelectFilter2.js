@@ -156,6 +156,6 @@ window.SelectFilter = {
         }
         return true;
     }
-}
+};
 
 })(django.jQuery);
