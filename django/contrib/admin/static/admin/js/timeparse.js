@@ -24,7 +24,7 @@ var timeParsePatterns = [
     // 3 am / 3 a.m. / 3am
     {   re: /^(\d+)\s*([ap])(?:.?m.?)?$/i,
         handler: function(bits) {
-            var hour = parseInt(bits[1]);
+            var hour = parseInt(bits[1], 10);
             if (hour == 12) {
                 hour = 0;
             }
@@ -42,8 +42,8 @@ var timeParsePatterns = [
     // 3.30 am / 3:15 a.m. / 3.00am
     {   re: /^(\d+)[.:](\d{2})\s*([ap]).?m.?$/i,
         handler: function(bits) {
-            var hour = parseInt(bits[1]);
-            var mins = parseInt(bits[2]);
+            var hour = parseInt(bits[1], 10);
+            var mins = parseInt(bits[2], 10);
             if (mins < 10) {
                 mins = '0' + mins;
             }

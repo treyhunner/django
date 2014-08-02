@@ -7,7 +7,7 @@ depends on core.js for utility functions like removeChildren or quickElement
 var CalendarNamespace = {
     monthsOfYear: gettext('January February March April May June July August September October November December').split(' '),
     daysOfWeek: gettext('S M T W T F S').split(' '),
-    firstDayOfWeek: parseInt(get_format('FIRST_DAY_OF_WEEK')),
+    firstDayOfWeek: parseInt(get_format('FIRST_DAY_OF_WEEK'), 10),
     isLeapYear: function(year) {
         return (((year % 4) === 0) && ((year % 100) !== 0) || ((year % 400) === 0));
     },
@@ -50,8 +50,8 @@ var CalendarNamespace = {
             isSelectedMonth = (selected.getUTCFullYear() == year && (selected.getUTCMonth()+1) == month);
         }
 
-        month = parseInt(month);
-        year = parseInt(year);
+        month = parseInt(month, 10);
+        year = parseInt(year, 10);
         var calDiv = document.getElementById(div_id);
         removeChildren(calDiv);
         var calTable = document.createElement('table');
