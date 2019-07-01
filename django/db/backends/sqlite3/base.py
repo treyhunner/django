@@ -17,6 +17,7 @@ from django.db import utils
 from django.db.backends import utils as backend_utils
 from django.db.backends.base.base import BaseDatabaseWrapper
 from django.utils import timezone
+from django.utils._os import fspath
 from django.utils.dateparse import parse_datetime, parse_time
 from django.utils.duration import duration_microseconds
 
@@ -152,7 +153,7 @@ class DatabaseWrapper(BaseDatabaseWrapper):
                 "settings.DATABASES is improperly configured. "
                 "Please supply the NAME value.")
         kwargs = {
-            'database': settings_dict['NAME'],
+            'database': fspath(settings_dict['NAME']),
             'detect_types': Database.PARSE_DECLTYPES | Database.PARSE_COLNAMES,
             **settings_dict['OPTIONS'],
         }

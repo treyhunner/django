@@ -1,4 +1,5 @@
 import os
+import pathlib
 import tempfile
 from os.path import abspath, dirname, join, normcase, sep
 
@@ -19,6 +20,39 @@ def npath(path):
     Python 2. Noop for Python 3.
     """
     return path
+
+
+def fspath(path):
+    """
+    Equivalent of os.fspath in Python 3.7
+
+    Return the path representation of a path-like object.
+    If str or bytes is passed in, it is returned unchanged. Otherwise we
+    look for a pathlib.Path object or an object with ``__fspath__``
+    If the provided path is not str, bytes, Path-like, raise TypeError.
+    """
+    if isinstance(path, (str, bytes)):
+        return path
+
+    # Work from the object's type to match method resolution of other magic
+    # methods.
+    path_type = type(path)
+    if isinstance(path_type, pathlib.Path):
+        return str(path_type)
+    try:
+        path_string = path_type.__fspath__(path)
+    except AttributeError:
+        if hasattr(path_type, '__fspath__'):
+            raise
+        else:
+            raise TypeError(
+                'expected str, bytes or path-like object, not {}'.format(
+                path_type.__name__))
+    if not isinstance(path_string, (str, bytes)):
+        raise TypeError(
+            'expected {}.__fspath__() to return str or bytes, '
+            'not {}'.format(path_type.__name__, type(path_string).__name__))
+    return path_string
 
 
 def safe_join(base, *paths):

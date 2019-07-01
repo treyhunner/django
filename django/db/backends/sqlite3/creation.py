@@ -9,7 +9,7 @@ class DatabaseCreation(BaseDatabaseCreation):
 
     @staticmethod
     def is_in_memory_db(database_name):
-        return database_name == ':memory:' or 'mode=memory' in database_name
+        return database_name == ':memory:' or 'mode=memory' in str(database_name)
 
     def _get_test_db_name(self):
         test_database_name = self.connection.settings_dict['TEST']['NAME'] or ':memory:'
